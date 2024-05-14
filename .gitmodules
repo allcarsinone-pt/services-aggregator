@@ -1,0 +1,15 @@
+[submodule "authMicroservice"]
+	path = authMicroservice
+	url = git@github.com:allcarsinone-pt/authMicroservice
+[submodule "vehiclesMicroservice"]
+	path = vehiclesMicroservice
+	url = git@github.com:allcarsinone-pt/vehiclesMicroservice
+[submodule "standsMicroservice"]
+	path = standsMicroservice
+	url = git@github.com:allcarsinone-pt/standsMicroservice
+[submodule "salesMicroservice"]
+	path = salesMicroservice
+	url = git@school_gh:allcarsinone-pt/salesMicroservice
+[submodule "apache-server"]
+	path = apache-server
+	url = git@school_gh:allcarsinone-pt/apache-server
