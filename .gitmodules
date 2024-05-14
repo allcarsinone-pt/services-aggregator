@@ -9,7 +9,7 @@
 	url = git@github.com:allcarsinone-pt/standsMicroservice
 [submodule "salesMicroservice"]
 	path = salesMicroservice
-	url = git@school_gh:allcarsinone-pt/salesMicroservice
+	url = git@github.com:allcarsinone-pt/salesMicroservice
 [submodule "apache-server"]
 	path = apache-server
-	url = git@school_gh:allcarsinone-pt/apache-server
+	url = git@github.com:allcarsinone-pt/apache-server
