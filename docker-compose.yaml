@@ -68,7 +68,7 @@ services:
     env_file:
       - ./envs/vehicles.env
     volumes:
-      -   ./shared/vehicles:/usr/src/app/src/static/photos:rw
+      -   ./shared/photos:/usr/src/app/src/static/photos:rw
     depends_on:
       - db_vehicles
       - apache
