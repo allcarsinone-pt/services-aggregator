@@ -12,6 +12,92 @@ services:
     volumes: 
       - db_auth:/var/lib/postgresql/data
       - ./authMicroservice/database:/docker-entrypoint-initdb.d
+
+  db_vehicles:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=dss
+      - POSTGRES_PASSWORD=dss
+      - POSTGRES_DB=vehicles
+    ports:
+      - '5433:5432'
+    volumes: 
+      - db_vehicles:/var/lib/postgresql/data
+      - ./vehiclesMicroservice/src/database:/docker-entrypoint-initdb.d
+  db_stands:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=dss
+      - POSTGRES_PASSWORD=dss
+      - POSTGRES_DB=stands
+    ports:
+      - '5434:5432'
+    volumes: 
+      - db_stands:/var/lib/postgresql/data
+      - ./standsMicroservice/src/database:/docker-entrypoint-initdb.d
+
+  db_sales:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=dss
+      - POSTGRES_PASSWORD=dss
+      - POSTGRES_DB=sales
+    ports:
+      - '5435:5432'
+    volumes: 
+      - db_sales:/var/lib/postgresql/data
+      - ./salesMicroservice/database:/docker-entrypoint-initdb.d
+  
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    
+  vehicles:
+    build:
+      context: ./vehiclesMicroservice
+      dockerfile: Dockerfile
+    
+    ports:
+      - '3003:3003'
+    env_file:
+      - ./envs/vehicles.env
+    volumes:
+      -   ./shared/vehicles:/usr/src/app/src/static/photos:rw
+    depends_on:
+      - db_vehicles
+      - apache
+  
+  stands:
+    build:
+      context: ./standsMicroservice
+      dockerfile: Dockerfile
+    
+    ports:
+      - '3000:3000'
+    env_file:
+      - ./envs/stands.env
+    depends_on:
+      - db_stands
+      - apache
+  sales:
+    build:
+      context: ./standsMicroservice
+      dockerfile: Dockerfile
+    
+    ports:
+      - '3004:3004'
+    env_file:
+      - ./envs/sales.env
+    depends_on:
+      - db_sales
+      - apache
+
   auth:
     build:
       context: ./authMicroservice
@@ -19,8 +105,8 @@ services:
     
     ports:
       - '3001:3001'
-    environment:
-      -  DATABASE_URL=postgresql://dss:dss@db_auth/users
+    env_file:
+      - ./envs/auth.env
     volumes:
       -   ./shared/profile:/usr/src/app/src/static/profile:rw
     depends_on:
@@ -38,7 +124,9 @@ services:
     
 volumes:
   db_auth:
-    driver: local
+  db_vehicles:
+  db_stands:
+  db_sales:
   shared_volume:
   
 
