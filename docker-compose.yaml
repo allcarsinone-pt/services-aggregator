@@ -87,7 +87,7 @@ services:
       - apache
   sales:
     build:
-      context: ./standsMicroservice
+      context: ./salesMicroservice
       dockerfile: Dockerfile
     
     ports:
